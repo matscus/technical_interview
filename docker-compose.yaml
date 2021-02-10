@@ -1,0 +1,92 @@
+version: '3.7'
+
+volumes:
+    prometheus_data: {}
+    grafana_data: {}
+    postgres_data: {}
+
+networks:
+  interview-net:
+    driver: bridge
+
+services:
+  postgres:
+    image: "postgres" 
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/ 
+      - postgres_data:/postgres
+    ports:
+      - 5432:5432
+    networks:
+      - interview-net
+    labels:
+        org.label-schema.group: "postgres"
+
+  postgres_exporter:
+    image: wrouesnel/postgres_exporter
+    depends_on:
+      - postgres
+    ports:
+      - 9187:9187
+    networks:
+      - interview-net
+    environment:
+      DATA_SOURCE_NAME: "postgresql://postgres:postgres@postgres:5432/?sslmode=disable"
+    labels:
+      org.label-schema.group: "exporters"        
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention=200h'
+      - '--web.enable-lifecycle'
+    ports:
+      - 9090:9090
+    networks:
+      - interview-net
+    labels:
+      org.label-schema.group: "prometheus"
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/datasources:/etc/grafana/datasources
+      - ./grafana/dashboards:/etc/grafana/dashboards
+      - ./grafana/setup.sh:/setup.sh
+    entrypoint: /setup.sh
+    environment:
+      - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    ports:
+      - 3000:3000
+    networks:
+      - interview-net
+    labels:
+      org.label-schema.group: "grafana"
+
+  cadvisor:
+    image: google/cadvisor
+    container_name: cadvisor
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      #- /cgroup:/cgroup:ro #doesn't work on MacOS only for Linux
+    ports:
+      - 8080:8080
+    networks:
+      - interview-net
+    labels:
+      org.label-schema.group: "exporters"
