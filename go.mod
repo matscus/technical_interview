@@ -1,3 +1,8 @@
-module https://github.com/matscus/technical_interview
+module github.com/matscus/technical_interview
 
 go 1.15
+
+require (
+	github.com/gorilla/mux v1.8.0
+	github.com/lib/pq v1.9.0
+)
