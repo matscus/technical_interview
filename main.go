@@ -23,8 +23,8 @@ var (
 )
 
 func main() {
-	flag.StringVar(&pemPath, "pempath", os.Getenv("SERVERREM"), "path to pem file")
-	flag.StringVar(&keyPath, "keypath", os.Getenv("SERVERKEY"), "path to key file")
+	flag.StringVar(&pemPath, "pempath", "/application/server.pem", "path to pem file")
+	flag.StringVar(&keyPath, "keypath", "/application/server.key", "path to key file")
 	flag.StringVar(&listenport, "port", "9443", "port to Listen")
 	flag.StringVar(&proto, "proto", "https", "http or https")
 	flag.DurationVar(&wait, "graceful-timeout", time.Second*15, "the duration for which the server gracefully")
@@ -40,9 +40,6 @@ func main() {
 
 	r.HandleFunc("/api/v1/book/getbooks", handlers.GetBooks).Methods(http.MethodGet, http.MethodOptions)
 	http.Handle("/api/v1/", r)
-
-	//connStr := "postgres://" + dbuser + ":" + dbpassword + "@" + dbhost + "/" + dbname + "?sslmode=disable"
-	//databaseConnection(connStr)
 
 	addrs, err := net.InterfaceAddrs()
 	if err != nil {
@@ -104,5 +101,4 @@ func databaseConnection(connStr string) {
 			time.Sleep(5 * time.Second)
 		}
 	}()
-
 }
