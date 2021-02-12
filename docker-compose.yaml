@@ -6,34 +6,53 @@ volumes:
     postgres_data: {}
 
 networks:
-  interview-net:
-    driver: bridge
+   technical_interview:
+     driver: bridge
 
 services:
+  technical_interview:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: technical_interview
+    ports:
+      - 9443:9443
+    networks:
+      - technical_interview
+    depends_on:
+      - postgres
+    labels:
+        org.label-schema.group: "technical_interview"
+
   postgres:
     image: "postgres" 
     volumes:
       - postgres_data:/var/lib/postgresql/data/ 
       - postgres_data:/postgres
+    container_name: postgresdb
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
     ports:
       - 5432:5432
     networks:
-      - interview-net
+      - technical_interview
     labels:
         org.label-schema.group: "postgres"
 
   postgres_exporter:
     image: wrouesnel/postgres_exporter
+    container_name: postgres_exporter
     depends_on:
       - postgres
     ports:
       - 9187:9187
     networks:
-      - interview-net
+      - technical_interview
     environment:
-      DATA_SOURCE_NAME: "postgresql://postgres:postgres@postgres:5432/?sslmode=disable"
+      DATA_SOURCE_NAME: "postgresql://postgres:postgres@postgresdb:5432/?sslmode=disable"
     labels:
-      org.label-schema.group: "exporters"        
+      org.label-schema.group: "monitoring"        
 
   prometheus:
     image: prom/prometheus
@@ -51,19 +70,17 @@ services:
     ports:
       - 9090:9090
     networks:
-      - interview-net
+      - technical_interview
     labels:
-      org.label-schema.group: "prometheus"
+      org.label-schema.group: "monitoring"
 
   grafana:
     image: grafana/grafana
     container_name: grafana
     volumes:
       - grafana_data:/var/lib/grafana
-      - ./grafana/datasources:/etc/grafana/datasources
-      - ./grafana/dashboards:/etc/grafana/dashboards
-      - ./grafana/setup.sh:/setup.sh
-    entrypoint: /setup.sh
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
     environment:
       - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
       - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
@@ -71,9 +88,9 @@ services:
     ports:
       - 3000:3000
     networks:
-      - interview-net
+      - technical_interview
     labels:
-      org.label-schema.group: "grafana"
+      org.label-schema.group: "monitoring"
 
   cadvisor:
     image: google/cadvisor
@@ -83,10 +100,30 @@ services:
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
-      #- /cgroup:/cgroup:ro #doesn't work on MacOS only for Linux
+      - /cgroup:/cgroup:ro #only for Linux, not MAC OS
     ports:
       - 8080:8080
     networks:
-      - interview-net
+      - technical_interview
     labels:
-      org.label-schema.group: "exporters"
+      org.label-schema.group: "monitoring"
+
+  nodeexporter:
+    image: prom/node-exporter
+    container_name: node-exporter
+    user: root
+    privileged: true
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    ports:
+      - 9100:9100
+    networks:
+      - technical_interview
+    labels:
+      org.label-schema.group: "monitoring"
