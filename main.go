@@ -4,9 +4,11 @@ import (
 	"context"
 	"database/sql"
 	"flag"
+	"fmt"
 	"log"
 	"net"
 	"net/http"
+	"net/http/pprof"
 	"os"
 	"os/signal"
 	"time"
@@ -20,26 +22,43 @@ import (
 var (
 	pemPath, keyPath, proto, listenport, host, dbuser, dbpassword, dbhost, dbname string
 	wait, writeTimeout, readTimeout, idleTimeout                                  time.Duration
+	dbport                                                                        int
+	DB                                                                            *sql.DB
 )
 
 func main() {
 	flag.StringVar(&pemPath, "pempath", "/application/server.pem", "path to pem file")
 	flag.StringVar(&keyPath, "keypath", "/application/server.key", "path to key file")
-	flag.StringVar(&listenport, "port", "9443", "port to Listen")
+	flag.StringVar(&listenport, "port", "9444", "port to Listen")
 	flag.StringVar(&proto, "proto", "https", "http or https")
+	flag.StringVar(&dbuser, "user", "postgres", "db user")
+	flag.StringVar(&dbpassword, "password", `postgres`, "db user password")
+	flag.StringVar(&dbhost, "host", "localhost", "db host")
+	flag.IntVar(&dbport, "dbport", 5432, "db port")
+	flag.StringVar(&dbname, "dbname", "postgres", "db name")
 	flag.DurationVar(&wait, "graceful-timeout", time.Second*15, "the duration for which the server gracefully")
 	flag.DurationVar(&readTimeout, "read-timeout", time.Second*15, "read server timeout")
 	flag.DurationVar(&writeTimeout, "write-timeout", time.Second*15, "write server timeout")
 	flag.DurationVar(&idleTimeout, "idle-timeout", time.Second*60, "idle server timeout")
-	flag.StringVar(&dbuser, "user", "postgres", "db user")
-	flag.StringVar(&dbpassword, "password", `postgres`, "db user password")
-	flag.StringVar(&dbhost, "host", "postgres:5433", "db host")
-	flag.StringVar(&dbname, "dbname", "postgres", "db name")
 	flag.Parse()
 	r := mux.NewRouter()
-
 	r.HandleFunc("/api/v1/book/getbooks", handlers.GetBooks).Methods(http.MethodGet, http.MethodOptions)
-	http.Handle("/api/v1/", r)
+	r.HandleFunc("/debug/pprof/", pprof.Index)
+	r.HandleFunc("/debug/pprof/profile", pprof.Profile)
+	r.Handle("/debug/pprof/allocs", pprof.Handler("allocs"))
+	r.Handle("/debug/pprof/block", pprof.Handler("block"))
+	r.Handle("/debug/pprof/goroutine", pprof.Handler("goroutine"))
+	r.Handle("/debug/pprof/heap", pprof.Handler("heap"))
+	r.Handle("/debug/pprof/mutex", pprof.Handler("mutex"))
+	r.Handle("/debug/pprof/threadcreate", pprof.Handler("threadcreate"))
+	http.Handle("/", r)
+
+	databaseConnection(fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", dbhost, dbport, dbuser, dbpassword, dbname))
+	err := createScheme()
+	if err != nil {
+		log.Println("createScheme error ", err)
+		os.Exit(1)
+	}
 
 	addrs, err := net.InterfaceAddrs()
 	if err != nil {
@@ -87,14 +106,22 @@ func main() {
 	os.Exit(0)
 }
 
+func createScheme() (err error) {
+	_, err = DB.Query("select * from tUser limit 1")
+	log.Println("teststs", err)
+	return err
+}
+
 func databaseConnection(connStr string) {
-	db, err := sql.Open("postgres", connStr)
+	var err error
+	DB, err = sql.Open("postgres", connStr)
 	if err != nil {
-		log.Printf("Database connectin error %s\n", err)
+		log.Printf("Database connection error %s\n", err)
 	}
+	log.Printf("Database connection")
 	go func() {
 		for {
-			err := db.Ping()
+			err := DB.Ping()
 			if err != nil {
 				log.Printf("database ping error %s\n", err)
 			}
