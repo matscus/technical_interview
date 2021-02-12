@@ -13,7 +13,7 @@ clean:
 	if [ -f ${BINARY} ] ; then rm ${BINARY} ; fi
 
 docker:
-	docker build -t golang_template_image .
+	docker build -t technical_interview .
 
 run:
 	docker-compose up --build -d
