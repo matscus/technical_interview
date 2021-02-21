@@ -44,12 +44,12 @@ func InitDB(connStr string) {
 }
 
 type User struct {
-	ID        uuid.UUID `json:"id" db:"id"`
-	FirstName string    `json:"firstname" db:"firstname"`
-	LastName  string    `json:"lastname" db:"lastname"`
-	Phone     string    `json:"phone" db:"phone"`
-	Email     string    `json:"email" db:"email"`
-	Gender    string    `json:"gender" db:"gender"`
+	ID        uuid.UUID `json:"id,omitempty" db:"id"`
+	FirstName string    `json:"firstname,omitempty" db:"firstname"`
+	LastName  string    `json:"lastname,omitempty" db:"lastname"`
+	Phone     string    `json:"phone,omitempty" db:"phone"`
+	Email     string    `json:"email,omitempty" db:"email"`
+	Gender    string    `json:"gender,omitempty" db:"gender"`
 }
 
 //New  - create and return new fake user
@@ -72,8 +72,16 @@ func GetUser(uuid uuid.UUID) (user User, err error) {
 	return user, db.Get(&user, "SELECT * FROM users where id=$1", uuid)
 }
 
-func (u *User) Create() error {
+// func ChangeUser() (err error) {
+// 	//db.NamedExec()
+// 	return db.Get(&user, "SELECT * FROM users where id=$1", uuid)
+// }
 
+func (u *User) Create() error {
+	_, err := db.NamedExec("INSERT INTO users (id,firstname,lastname,phone,email,gender) VALUES (:id,:firstname,:lastname,:phone,:email,:gender)", &u)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
