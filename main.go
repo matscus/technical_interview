@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"database/sql"
 	"flag"
 	"fmt"
 	"log"
@@ -15,15 +14,13 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/matscus/technical_interview/handlers"
-
-	_ "github.com/lib/pq"
+	"github.com/matscus/technical_interview/users"
 )
 
 var (
 	pemPath, keyPath, proto, listenport, host, dbuser, dbpassword, dbhost, dbname string
 	wait, writeTimeout, readTimeout, idleTimeout                                  time.Duration
 	dbport                                                                        int
-	DB                                                                            *sql.DB
 )
 
 func main() {
@@ -42,7 +39,7 @@ func main() {
 	flag.DurationVar(&idleTimeout, "idle-timeout", time.Second*60, "idle server timeout")
 	flag.Parse()
 	r := mux.NewRouter()
-	r.HandleFunc("/api/v1/book/getbooks", handlers.GetBooks).Methods(http.MethodGet, http.MethodOptions)
+	r.HandleFunc("/api/v1/book/getusers", handlers.GetAllUsers).Methods(http.MethodGet, http.MethodOptions)
 	r.HandleFunc("/debug/pprof/", pprof.Index)
 	r.HandleFunc("/debug/pprof/profile", pprof.Profile)
 	r.Handle("/debug/pprof/allocs", pprof.Handler("allocs"))
@@ -53,12 +50,7 @@ func main() {
 	r.Handle("/debug/pprof/threadcreate", pprof.Handler("threadcreate"))
 	http.Handle("/", r)
 
-	databaseConnection(fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", dbhost, dbport, dbuser, dbpassword, dbname))
-	err := createScheme()
-	if err != nil {
-		log.Println("createScheme error ", err)
-		os.Exit(1)
-	}
+	users.InitDB(fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", dbhost, dbport, dbuser, dbpassword, dbname))
 
 	addrs, err := net.InterfaceAddrs()
 	if err != nil {
@@ -104,28 +96,4 @@ func main() {
 	srv.Shutdown(ctx)
 	log.Println("server shutting down")
 	os.Exit(0)
-}
-
-func createScheme() (err error) {
-	_, err = DB.Query("select * from tUser limit 1")
-	log.Println("teststs", err)
-	return err
-}
-
-func databaseConnection(connStr string) {
-	var err error
-	DB, err = sql.Open("postgres", connStr)
-	if err != nil {
-		log.Printf("Database connection error %s\n", err)
-	}
-	log.Printf("Database connection")
-	go func() {
-		for {
-			err := DB.Ping()
-			if err != nil {
-				log.Printf("database ping error %s\n", err)
-			}
-			time.Sleep(5 * time.Second)
-		}
-	}()
 }
