@@ -27,3 +27,11 @@ scrape_configs:
     scrape_interval: 10s
     static_configs:
       - targets: ['172.17.0.1:9001']
+
+  - job_name: 'technical_interview'
+    scrape_interval: 10s
+    scheme: https
+    tls_config:
+      insecure_skip_verify: true
+    static_configs:
+      - targets: ['technical_interview:9443']
