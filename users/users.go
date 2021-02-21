@@ -65,11 +65,11 @@ func New() User {
 }
 
 func GetAllUsers() (users []User, err error) {
-	err = db.Select(&users, "SELECT * FROM users")
-	if err != nil {
-		return nil, err
-	}
-	return users, nil
+	return users, db.Select(&users, "SELECT * FROM users")
+}
+
+func GetUser(uuid uuid.UUID) (user User, err error) {
+	return user, db.Get(&user, "SELECT * FROM users where id=$1", uuid)
 }
 
 func (u *User) Create() error {
