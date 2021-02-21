@@ -16,8 +16,7 @@
     "editable": true,
     "gnetId": 6671,
     "graphTooltip": 0,
-    "id": 6,
-    "iteration": 1613908227306,
+    "iteration": 1613908893601,
     "links": [],
     "panels": [
       {
@@ -608,7 +607,7 @@
             "format": "time_series",
             "interval": "",
             "intervalFactor": 2,
-            "legendFormat": "{{pod}}",
+            "legendFormat": "{{__name__}}",
             "metric": "process_open_fds",
             "refId": "A",
             "step": 4
@@ -714,7 +713,7 @@
             "format": "time_series",
             "interval": "",
             "intervalFactor": 2,
-            "legendFormat": "{{pod}}",
+            "legendFormat": "{{instance}}",
             "metric": "process_open_fds",
             "refId": "A",
             "step": 4
@@ -820,7 +819,7 @@
             "format": "time_series",
             "interval": "",
             "intervalFactor": 2,
-            "legendFormat": "{{pod}}",
+            "legendFormat": "{{__name__}}",
             "metric": "go_goroutines",
             "refId": "A",
             "step": 4
@@ -1072,5 +1071,5 @@
     "timezone": "browser",
     "title": "Go metrics",
     "uid": "ypFZFgvmz",
-    "version": 6
+    "version": 1
   }
