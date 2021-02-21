@@ -15,6 +15,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/matscus/technical_interview/handlers"
 	"github.com/matscus/technical_interview/users"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 var (
@@ -26,11 +27,11 @@ var (
 func main() {
 	flag.StringVar(&pemPath, "pempath", "/application/server.pem", "path to pem file")
 	flag.StringVar(&keyPath, "keypath", "/application/server.key", "path to key file")
-	flag.StringVar(&listenport, "port", "9444", "port to Listen")
+	flag.StringVar(&listenport, "port", "9443", "port to Listen")
 	flag.StringVar(&proto, "proto", "https", "http or https")
 	flag.StringVar(&dbuser, "user", "postgres", "db user")
 	flag.StringVar(&dbpassword, "password", `postgres`, "db user password")
-	flag.StringVar(&dbhost, "host", "localhost", "db host")
+	flag.StringVar(&dbhost, "host", "postgres", "db host")
 	flag.IntVar(&dbport, "dbport", 5432, "db port")
 	flag.StringVar(&dbname, "dbname", "postgres", "db name")
 	flag.DurationVar(&wait, "graceful-timeout", time.Second*15, "the duration for which the server gracefully")
@@ -40,7 +41,9 @@ func main() {
 	flag.Parse()
 	r := mux.NewRouter()
 	r.HandleFunc("/api/v1/users/getusers", handlers.GetAllUsers).Methods(http.MethodGet, http.MethodOptions)
+	r.HandleFunc("/api/v1/users/createrandomuser", handlers.CreateRandomUser).Methods(http.MethodPost, http.MethodOptions)
 	r.HandleFunc("/api/v1/users/getuser", handlers.GetUser).Methods(http.MethodGet, http.MethodOptions).Queries("id", "{id}")
+	r.Handle("/metrics", promhttp.Handler())
 	r.HandleFunc("/debug/pprof/", pprof.Index)
 	r.HandleFunc("/debug/pprof/profile", pprof.Profile)
 	r.Handle("/debug/pprof/allocs", pprof.Handler("allocs"))
