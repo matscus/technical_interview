@@ -105,6 +105,7 @@ services:
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
+      - /var/run/docker.sock:/var/run/docker.sock:rw
       #- /cgroup:/cgroup:ro #only for Linux, not MAC OS
     ports:
       - 8080:8080
