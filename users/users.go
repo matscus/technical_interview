@@ -22,6 +22,8 @@ var (
 		email      varchar NOT NULL,
 		gender    varchar(6) NOT NULL
 	);
+	
+	CREATE EXTENSION pg_stat_statements;
 	`
 )
 
