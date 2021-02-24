@@ -43,6 +43,8 @@ func main() {
 	r.HandleFunc("/api/v1/users/getusers", handlers.GetAllUsers).Methods(http.MethodGet, http.MethodOptions)
 	r.HandleFunc("/api/v1/users/createrandomuser", handlers.CreateRandomUser).Methods(http.MethodPost, http.MethodOptions)
 	r.HandleFunc("/api/v1/users/getuser", handlers.GetUser).Methods(http.MethodGet, http.MethodOptions).Queries("id", "{id}")
+	r.HandleFunc("/api/v1/users/updateuser", handlers.UpdateUser).Methods(http.MethodPost, http.MethodOptions)
+	r.HandleFunc("/api/v1/users/deleteuser", handlers.DeleteUser).Methods(http.MethodPost, http.MethodOptions)
 	r.Handle("/metrics", promhttp.Handler())
 	r.HandleFunc("/debug/pprof/", pprof.Index)
 	r.HandleFunc("/debug/pprof/profile", pprof.Profile)
