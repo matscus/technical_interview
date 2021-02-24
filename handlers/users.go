@@ -91,6 +91,19 @@ func ChangeUser(w http.ResponseWriter, r *http.Request) {
 	err = user.Update()
 }
 
+func DeleteUser(w http.ResponseWriter, r *http.Request) {
+	user := users.User{}
+	err := json.NewDecoder(r.Body).Decode(&user)
+	if err != nil {
+		WriteHTTPError(w, http.StatusInternalServerError, err)
+		return
+	}
+	if enable {
+		ch <- user.ID
+	}
+	err = user.Delete()
+}
+
 func reader() {
 	for {
 		u := <-ch
