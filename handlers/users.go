@@ -22,7 +22,7 @@ var (
 func init() {
 	for {
 		time.Sleep(5 * time.Second)
-		if time.Now().Sub(start) < (15 * time.Minute) {
+		if time.Now().Sub(start) < (5 * time.Minute) {
 			go reader()
 			enable = true
 			break
