@@ -1,6 +1,7 @@
 package users
 
 import (
+	"bytes"
 	"log"
 	"time"
 
@@ -72,11 +73,6 @@ func GetUser(uuid uuid.UUID) (user User, err error) {
 	return user, db.Get(&user, "SELECT * FROM users where id=$1", uuid)
 }
 
-// func ChangeUser() (err error) {
-// 	//db.NamedExec()
-// 	return db.Get(&user, "SELECT * FROM users where id=$1", uuid)
-// }
-
 func (u *User) Create() error {
 	_, err := db.NamedExec("INSERT INTO users (id,firstname,lastname,phone,email,gender) VALUES (:id,:firstname,:lastname,:phone,:email,:gender)", &u)
 	if err != nil {
@@ -85,9 +81,44 @@ func (u *User) Create() error {
 	return nil
 }
 
-func (u *User) ChangeUser() error {
-
+func (u *User) Update() error {
+	buf := bytes.Buffer{}
+	buf.WriteString("UPDATE users SET ")
+	if u.FirstName != "" {
+		buf.WriteString("firstname=" + u.FirstName)
+	}
+	if u.LastName != "" {
+		buf.WriteString(",lastname=" + u.LastName)
+	}
+	if u.Phone != "" {
+		buf.WriteString(",phone=" + u.Phone)
+	}
+	if u.Email != "" {
+		buf.WriteString(",email=" + u.Email)
+	}
+	if u.Gender != "" {
+		buf.WriteString(",firstname=" + u.Gender)
+	}
+	buf.WriteString(" where id=" + u.ID.String())
+	_, err := db.NamedExec(buf.String(), nil)
+	if err != nil {
+		return err
+	}
 	return nil
+}
+
+func (u *User) Delete() error {
+	_, err := db.NamedExec("DELETE users WHERE id=$1", &u.ID)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func createInsertString() string {
+	buf := bytes.Buffer{}
+	buf.WriteString("INSERT INTO users (")
+	return buf.String()
 }
 
 func initScheme() {

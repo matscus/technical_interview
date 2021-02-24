@@ -88,7 +88,7 @@ func ChangeUser(w http.ResponseWriter, r *http.Request) {
 	if enable {
 		ch <- user.ID
 	}
-	err = user.ChangeUser()
+	err = user.Update()
 }
 
 func reader() {
