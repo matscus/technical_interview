@@ -78,7 +78,7 @@ func CreateRandomUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
-func ChangeUser(w http.ResponseWriter, r *http.Request) {
+func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	user := users.User{}
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
