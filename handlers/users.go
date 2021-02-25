@@ -31,7 +31,7 @@ func init() {
 }
 
 func GetAllUsers(w http.ResponseWriter, r *http.Request) {
-	users, err := users.GetAllUsers()
+	users, err := users.GetAll()
 	if err != nil {
 		WriteHTTPError(w, http.StatusInternalServerError, err)
 	}
@@ -50,7 +50,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 			WriteHTTPError(w, http.StatusOK, errors.New("uuid format is not valide"))
 			return
 		}
-		user, err := users.GetUser(uuid)
+		user, err := users.Get(uuid)
 		if err != nil {
 			WriteHTTPError(w, http.StatusInternalServerError, err)
 			return

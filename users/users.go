@@ -67,11 +67,11 @@ func New() User {
 	}
 }
 
-func GetAllUsers() (users []User, err error) {
+func GetAll() (users []User, err error) {
 	return users, db.Select(&users, "SELECT * FROM users")
 }
 
-func GetUser(uuid uuid.UUID) (user User, err error) {
+func Get(uuid uuid.UUID) (user User, err error) {
 	return user, db.Get(&user, "SELECT * FROM users where id=$1", uuid)
 }
 
