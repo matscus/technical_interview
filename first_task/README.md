@@ -22,4 +22,4 @@
     * Requests Get All Users, Update and Check - 300tps
     * Request Delete User - 10tps
     * SLA for all request - 1s
-5.  Analyze results and save screenshots of the graphs with problems, if any, or do not delete the volumes data when the project is stopped using - docker-compose down (without flags --rmi all and -v) or make stop.
+5. Analyze results and save screenshots of the graphs with problems, if any, or do not delete the volumes data when the project is stopped using - docker-compose down (without flags --rmi all and -v) or make stop.
