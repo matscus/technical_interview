@@ -23,7 +23,7 @@ var (
 		gender    varchar(6) NOT NULL
 	);
 	
-	CREATE EXTENSION pg_stat_statements;
+	CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
 	`
 )
 
@@ -99,10 +99,12 @@ func (u *User) Update() error {
 		buf.WriteString(",email=" + u.Email)
 	}
 	if u.Gender != "" {
-		buf.WriteString(",firstname=" + u.Gender)
+		buf.WriteString(",gender=" + u.Gender)
 	}
-	buf.WriteString(" where id=" + u.ID.String())
-	_, err := db.NamedExec(buf.String(), nil)
+	buf.WriteString(" where id=$1")
+	query := buf.String()
+	log.Println(query)
+	_, err := db.NamedExec(query, &u.ID)
 	if err != nil {
 		return err
 	}
@@ -115,12 +117,6 @@ func (u *User) Delete() error {
 		return err
 	}
 	return nil
-}
-
-func createInsertString() string {
-	buf := bytes.Buffer{}
-	buf.WriteString("INSERT INTO users (")
-	return buf.String()
 }
 
 func initScheme() {
