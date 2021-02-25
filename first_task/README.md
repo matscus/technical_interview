@@ -3,7 +3,7 @@
 
 1. Get project.
 2. Run project (credential from grafana admin\admin)
-3. Сreate a script for [Apache Jmeter](https://apache-mirror.rbc.ru/pub/apache//jmeter/binaries/apache-jmeter-5.4.1.tgz). To pass metrics you need to use [jmeter-prometheus-listener-plugin](https://github.com/kolesnikovm/jmeter-prometheus-listener/releases/download/2.0.2/jmeter-prometheus-listener-plugin-2.0.2.jar). You can also use MF LoadRunner, Gatling and others load tools. In this case, the provision of graphs of the load of these instruments will be required or use library prometheus for these tools and add target to the file ./reconfigure/prometheus/prometheus.yml.
+3. Сreate a script for [Apache Jmeter](https://apache-mirror.rbc.ru/pub/apache//jmeter/binaries/apache-jmeter-5.4.1.tgz). You need to use [jmeter-prometheus-listener-plugin](https://github.com/kolesnikovm/jmeter-prometheus-listener/releases/download/2.0.2/jmeter-prometheus-listener-plugin-2.0.2.jar) for pass metrics. You can also use MF LoadRunner, Gatling and others load tools. In this case, the provision of graphs of the load of these instruments will be required or use library prometheus for these tools and add target to the file ./reconfigure/prometheus/prometheus.yml.
     * Scenario for one user:
         * user creation
             * post request by "/api/v1/users/createrandomuser" with empty body.
