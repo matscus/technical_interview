@@ -87,24 +87,22 @@ func (u *User) Update() error {
 	buf := bytes.Buffer{}
 	buf.WriteString("UPDATE users SET ")
 	if u.FirstName != "" {
-		buf.WriteString("firstname=" + u.FirstName)
+		buf.WriteString("firstname=:firstname")
 	}
 	if u.LastName != "" {
-		buf.WriteString(",lastname=" + u.LastName)
+		buf.WriteString(",lastname=:lastname")
 	}
 	if u.Phone != "" {
-		buf.WriteString(",phone=" + u.Phone)
+		buf.WriteString(",phone=:phone")
 	}
 	if u.Email != "" {
-		buf.WriteString(",email=" + u.Email)
+		buf.WriteString(",email=:email")
 	}
 	if u.Gender != "" {
-		buf.WriteString(",gender=" + u.Gender)
+		buf.WriteString(",gender=:gender")
 	}
-	buf.WriteString(" where id=$1")
-	query := buf.String()
-	log.Println(query)
-	_, err := db.NamedExec(query, &u.ID)
+	buf.WriteString(" where id=:id")
+	_, err := db.NamedExec(buf.String(), &u)
 	if err != nil {
 		return err
 	}
