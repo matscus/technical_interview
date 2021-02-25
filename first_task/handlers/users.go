@@ -9,7 +9,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
-	"github.com/matscus/technical_interview/users"
+	"github.com/matscus/technical_interview/first_task/users"
 )
 
 var (

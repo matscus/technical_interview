@@ -1,4 +1,4 @@
-module github.com/matscus/technical_interview
+module github.com/matscus/technical_interview/first_task
 
 go 1.15
 
