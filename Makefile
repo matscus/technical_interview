@@ -7,7 +7,7 @@ engine:
 
 
 unittest:
-	go test -short  ./...
+	go test -v  ./...
 
 clean:
 	if [ -f ${BINARY} ] ; then rm ${BINARY} ; fi
