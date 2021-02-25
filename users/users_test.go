@@ -6,20 +6,20 @@ import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/brianvoe/gofakeit"
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"github.com/stretchr/testify/assert"
 )
 
 var (
+	u, _ = uuid.Parse("43f73baa-8d4e-4938-9106-86a908b446c3")
 	user = User{
-		ID:        uuid.New(),
-		FirstName: gofakeit.FirstName(),
-		LastName:  gofakeit.LastName(),
-		Phone:     gofakeit.Phone(),
-		Email:     gofakeit.Email(),
-		Gender:    gofakeit.Gender(),
+		ID:        u,
+		FirstName: "Bus",
+		LastName:  "Bakinsky",
+		Phone:     "03",
+		Email:     "bus$pbuspark.az",
+		Gender:    "bus",
 	}
 )
 
@@ -42,7 +42,7 @@ func NewMock() (*sql.DB, sqlmock.Sqlmock) {
 func Test_User_Get(t *testing.T) {
 	mockDB, mock, _ := sqlmock.New()
 	defer mockDB.Close()
-	db = sqlx.NewDb(mockDB, "sqlmock")
+	DB = sqlx.NewDb(mockDB, "sqlmock")
 	rows := sqlmock.NewRows([]string{"id", "firstname", "lastname", "phone", "email", "gender"}).
 		AddRow(user.ID, user.FirstName, user.LastName, user.Phone, user.Email, user.Gender)
 	mock.ExpectQuery("SELECT").WithArgs(user.ID).WillReturnRows(rows)
@@ -54,7 +54,7 @@ func Test_User_Get(t *testing.T) {
 func Test_User_GetAll(t *testing.T) {
 	mockDB, mock, _ := sqlmock.New()
 	defer mockDB.Close()
-	db = sqlx.NewDb(mockDB, "sqlmock")
+	DB = sqlx.NewDb(mockDB, "sqlmock")
 	rows := sqlmock.NewRows([]string{"id", "firstname", "lastname", "phone", "email", "gender"}).
 		AddRow(user.ID, user.FirstName, user.LastName, user.Phone, user.Email, user.Gender)
 	mock.ExpectQuery("SELECT").WillReturnRows(rows)
@@ -66,7 +66,7 @@ func Test_User_GetAll(t *testing.T) {
 func Test_User_Create(t *testing.T) {
 	mockDB, mock, _ := sqlmock.New()
 	defer mockDB.Close()
-	db = sqlx.NewDb(mockDB, "sqlmock")
+	DB = sqlx.NewDb(mockDB, "sqlmock")
 	mock.ExpectExec("INSERT INTO users").WillReturnResult(sqlmock.NewResult(1, 1))
 	err := user.Create()
 	assert.NoError(t, err)
@@ -75,7 +75,7 @@ func Test_User_Create(t *testing.T) {
 func Test_User_Delete(t *testing.T) {
 	mockDB, mock, _ := sqlmock.New()
 	defer mockDB.Close()
-	db = sqlx.NewDb(mockDB, "sqlmock")
+	DB = sqlx.NewDb(mockDB, "sqlmock")
 	mock.ExpectExec("DELETE").WillReturnResult(sqlmock.NewResult(1, 1))
 	err := user.Delete()
 	assert.NoError(t, err)
@@ -84,7 +84,7 @@ func Test_User_Delete(t *testing.T) {
 func Test_User_Update(t *testing.T) {
 	mockDB, mock, _ := sqlmock.New()
 	defer mockDB.Close()
-	db = sqlx.NewDb(mockDB, "sqlmock")
+	DB = sqlx.NewDb(mockDB, "sqlmock")
 	mock.ExpectExec("UPDATE").WillReturnResult(sqlmock.NewResult(1, 1))
 	err := user.Update()
 	assert.NoError(t, err)
