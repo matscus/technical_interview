@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	db     *sqlx.DB
+	DB     *sqlx.DB
 	schema = `
 	CREATE TABLE IF NOT EXISTS users (
 		id        uuid PRIMARY KEY,
@@ -29,14 +29,14 @@ var (
 
 func InitDB(connStr string) {
 	var err error
-	db, err = sqlx.Connect("postgres", connStr)
+	DB, err = sqlx.Connect("postgres", connStr)
 	if err != nil {
 		log.Printf("Database connection error %s\n", err)
 	}
 	log.Printf("Database connection")
 	go func() {
 		for {
-			err := db.Ping()
+			err := DB.Ping()
 			if err != nil {
 				log.Printf("database ping error %s\n", err)
 			}
@@ -68,15 +68,15 @@ func New() User {
 }
 
 func GetAll() (users []User, err error) {
-	return users, db.Select(&users, "SELECT * FROM users")
+	return users, DB.Select(&users, "SELECT * FROM users")
 }
 
 func Get(uuid uuid.UUID) (user User, err error) {
-	return user, db.Get(&user, "SELECT * FROM users where id=$1", uuid)
+	return user, DB.Get(&user, "SELECT * FROM users where id=$1", uuid)
 }
 
 func (u *User) Create() error {
-	_, err := db.NamedExec("INSERT INTO users (id,firstname,lastname,phone,email,gender) VALUES (:id,:firstname,:lastname,:phone,:email,:gender)", &u)
+	_, err := DB.NamedExec("INSERT INTO users (id,firstname,lastname,phone,email,gender) VALUES (:id,:firstname,:lastname,:phone,:email,:gender)", &u)
 	if err != nil {
 		return err
 	}
@@ -102,7 +102,7 @@ func (u *User) Update() error {
 		buf.WriteString(",gender=:gender")
 	}
 	buf.WriteString(" where id=:id")
-	_, err := db.NamedExec(buf.String(), &u)
+	_, err := DB.NamedExec(buf.String(), &u)
 	if err != nil {
 		return err
 	}
@@ -110,7 +110,7 @@ func (u *User) Update() error {
 }
 
 func (u *User) Delete() error {
-	_, err := db.Exec("DELETE from users WHERE id=$1", u.ID)
+	_, err := DB.Exec("DELETE from users WHERE id=$1", u.ID)
 	if err != nil {
 		return err
 	}
@@ -119,18 +119,18 @@ func (u *User) Delete() error {
 
 func initScheme() {
 	user := []User{}
-	err := db.Select(&user, "select * from users limit 1")
+	err := DB.Select(&user, "select * from users limit 1")
 	if err != nil {
 		log.Println("schema users is not exist, start created...")
-		db.MustExec(schema)
+		DB.MustExec(schema)
 		log.Println("creater complited")
 		insertTestValues()
 	} else {
 		log.Println("schema users is exist, start drop...")
-		db.MustExec("drop table users")
+		DB.MustExec("drop table users")
 		log.Println("drop complited")
 		log.Println("start created schema...")
-		db.MustExec(schema)
+		DB.MustExec(schema)
 		log.Println("created complited")
 		insertTestValues()
 	}
@@ -138,7 +138,7 @@ func initScheme() {
 
 func insertTestValues() {
 	log.Println("start insert test values")
-	tx := db.MustBegin()
+	tx := DB.MustBegin()
 	for i := 0; i < 100; i++ {
 		u := New()
 		_, err := tx.NamedExec("INSERT INTO users (id,firstname,lastname,phone,email,gender) VALUES (:id,:firstname,:lastname,:phone,:email,:gender)", &u)
