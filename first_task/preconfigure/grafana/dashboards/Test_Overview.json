@@ -3,502 +3,338 @@
       "list": [
         {
           "builtIn": 1,
-          "datasource": "Prometheus",
-          "enable": false,
-          "hide": false,
-          "iconColor": "#73BF69",
-          "limit": 100,
-          "name": "",
-          "query": "SELECT value, testName FROM testStartEnd WHERE type = 'started' GROUP BY runId LIMIT 1",
-          "showIn": 0,
-          "tagsColumn": "value",
-          "textColumn": "testName",
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
           "type": "dashboard"
         }
       ]
     },
     "editable": true,
     "gnetId": null,
-    "graphTooltip": 1,
-    "id": 7,
-    "iteration": 1614267248243,
+    "graphTooltip": 0,
+    "id": 8,
+    "iteration": 1614269910930,
     "links": [],
     "panels": [
       {
-        "aliasColors": {
-          "FAIL": "#bf1b00",
-          "PASS": "#629e51"
-        },
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
         "datasource": "Prometheus",
         "fieldConfig": {
           "defaults": {
-            "custom": {}
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "graph": false,
+                "legend": false,
+                "tooltip": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": true
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "short"
           },
-          "overrides": []
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "PASS"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "dark-green",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            }
+          ]
         },
-        "fill": 1,
-        "fillGradient": 0,
         "gridPos": {
           "h": 7,
           "w": 24,
           "x": 0,
           "y": 0
         },
-        "hiddenSeries": false,
-        "id": 2,
-        "interval": "$aggregation",
-        "legend": {
-          "avg": false,
-          "current": false,
-          "max": false,
-          "min": false,
-          "show": true,
-          "total": false,
-          "values": false
-        },
-        "lines": true,
-        "linewidth": 1,
-        "links": [],
-        "nullPointMode": "null",
+        "id": 4,
         "options": {
-          "alertThreshold": true
+          "graph": {},
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltipOptions": {
+            "mode": "single"
+          }
         },
-        "percentage": false,
         "pluginVersion": "7.4.3",
-        "pointradius": 5,
-        "points": false,
-        "renderer": "flot",
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
         "targets": [
           {
             "expr": "sum(rate(jmeter_requests{requestName=~\".+XX.+\"}[10s])) by (requestStatus)",
-            "format": "time_series",
-            "hide": false,
             "interval": "",
-            "intervalFactor": 1,
             "legendFormat": "{{requestStatus}}",
-            "refId": "C"
+            "queryType": "randomWalk",
+            "refId": "A"
           }
         ],
-        "thresholds": [],
         "timeFrom": null,
-        "timeRegions": [],
         "timeShift": null,
         "title": "Total TPS",
-        "tooltip": {
-          "shared": true,
-          "sort": 2,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "$$hashKey": "object:208",
-            "decimals": 0,
-            "format": "ops",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": "0",
-            "show": true
-          },
-          {
-            "$$hashKey": "object:209",
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
+        "type": "timeseries"
       },
       {
-        "aliasColors": {
-          "90pct": "#1f78c1",
-          "90pct MDM": "#962d82",
-          "95pct": "semi-dark-blue",
-          "avg": "#70dbed",
-          "avg MDM": "#d683ce"
-        },
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
-        "datasource": "-- Mixed --",
+        "datasource": "Prometheus",
         "fieldConfig": {
           "defaults": {
-            "custom": {}
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "graph": false,
+                "legend": false,
+                "tooltip": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": true
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "ms"
           },
-          "overrides": []
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "PASS"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "dark-green",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "avg"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "dark-blue",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "90pt"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "light-blue",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            }
+          ]
         },
-        "fill": 1,
-        "fillGradient": 0,
         "gridPos": {
           "h": 7,
           "w": 24,
           "x": 0,
           "y": 7
         },
-        "hiddenSeries": false,
-        "id": 4,
-        "interval": "$aggregation",
-        "legend": {
-          "avg": false,
-          "current": false,
-          "max": false,
-          "min": false,
-          "show": true,
-          "total": false,
-          "values": false
-        },
-        "lines": true,
-        "linewidth": 1,
-        "links": [],
-        "nullPointMode": "null",
+        "id": 2,
         "options": {
-          "alertThreshold": true
+          "graph": {},
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltipOptions": {
+            "mode": "single"
+          }
         },
-        "percentage": false,
         "pluginVersion": "7.4.3",
-        "pointradius": 5,
-        "points": false,
-        "renderer": "flot",
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
         "targets": [
           {
-            "datasource": "Prometheus",
             "expr": "avg(rate(jmeter_response_time_sum{requestName=~\".+XX.+\"}[10s])/rate(jmeter_response_time_count{requestName=~\".+XX.+\"}[10s]))",
-            "format": "time_series",
-            "groupBy": [
-              {
-                "params": [
-                  "$__interval"
-                ],
-                "type": "time"
-              },
-              {
-                "params": [
-                  "null"
-                ],
-                "type": "fill"
-              }
-            ],
-            "hide": false,
             "interval": "",
-            "intervalFactor": 1,
             "legendFormat": "avg",
-            "orderByTime": "ASC",
-            "policy": "default",
-            "refId": "A",
-            "resultFormat": "time_series",
-            "select": [
-              [
-                {
-                  "params": [
-                    "value"
-                  ],
-                  "type": "field"
-                },
-                {
-                  "params": [],
-                  "type": "mean"
-                }
-              ]
-            ],
-            "tags": []
+            "queryType": "randomWalk",
+            "refId": "A"
           },
           {
-            "datasource": "Prometheus",
             "expr": "avg(jmeter_response_time{requestName=~\".+XX.+\"})",
-            "format": "time_series",
             "hide": false,
-            "instant": false,
-            "intervalFactor": 1,
-            "legendFormat": "90pct",
+            "interval": "",
+            "legendFormat": "90pt",
+            "queryType": "randomWalk",
             "refId": "B"
           }
         ],
-        "thresholds": [
-          {
-            "colorMode": "ok",
-            "fill": true,
-            "line": false,
-            "op": "lt",
-            "value": 1000,
-            "yaxis": "left"
-          }
-        ],
         "timeFrom": null,
-        "timeRegions": [],
         "timeShift": null,
-        "title": "Response Time",
-        "tooltip": {
-          "shared": true,
-          "sort": 0,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "$$hashKey": "object:157",
-            "decimals": null,
-            "format": "ms",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": "0",
-            "show": true
-          },
-          {
-            "$$hashKey": "object:158",
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
+        "title": "Total TPS",
+        "type": "timeseries"
       },
       {
-        "aliasColors": {
-          "D5527: SynchronusSearch": "#e0f9d7",
-          "Maxim: Get Yandex": "purple",
-          "UC01_XX_SearchClient": "super-light-purple",
-          "gatling.users.mean": "super-light-purple"
-        },
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
-        "datasource": "-- Mixed --",
+        "datasource": "Prometheus",
         "fieldConfig": {
           "defaults": {
-            "custom": {}
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "graph": false,
+                "legend": false,
+                "tooltip": false
+              },
+              "lineInterpolation": "stepBefore",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": true
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "short"
           },
-          "overrides": []
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Threads"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "dark-green",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            }
+          ]
         },
-        "fill": 1,
-        "fillGradient": 0,
         "gridPos": {
           "h": 7,
           "w": 24,
           "x": 0,
           "y": 14
         },
-        "hiddenSeries": false,
         "id": 6,
-        "interval": "$aggregation",
-        "legend": {
-          "avg": false,
-          "current": false,
-          "max": false,
-          "min": false,
-          "show": true,
-          "total": false,
-          "values": false
-        },
-        "lines": true,
-        "linewidth": 1,
-        "links": [],
-        "nullPointMode": "connected",
         "options": {
-          "alertThreshold": true
+          "graph": {},
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltipOptions": {
+            "mode": "single"
+          }
         },
-        "percentage": false,
         "pluginVersion": "7.4.3",
-        "pointradius": 5,
-        "points": false,
-        "renderer": "flot",
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": true,
-        "steppedLine": false,
         "targets": [
           {
-            "datasource": "Prometheus",
             "expr": "sum(jmeter_running_threads) by (nodeName, threadGroup)",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "{{nodeName}}: {{threadGroup}}",
-            "refId": "A"
-          }
-        ],
-        "thresholds": [],
-        "timeFrom": null,
-        "timeRegions": [],
-        "timeShift": null,
-        "title": "Threads",
-        "tooltip": {
-          "shared": true,
-          "sort": 0,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "$$hashKey": "object:1108",
-            "decimals": 0,
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": "0",
-            "show": true
-          },
-          {
-            "$$hashKey": "object:1109",
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
-      },
-      {
-        "aliasColors": {
-          "received": "semi-dark-orange",
-          "sent": "light-yellow"
-        },
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
-        "datasource": null,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
-        "fill": 1,
-        "fillGradient": 0,
-        "gridPos": {
-          "h": 7,
-          "w": 24,
-          "x": 0,
-          "y": 21
-        },
-        "hiddenSeries": false,
-        "id": 26,
-        "legend": {
-          "avg": false,
-          "current": false,
-          "max": false,
-          "min": false,
-          "show": true,
-          "total": false,
-          "values": false
-        },
-        "lines": true,
-        "linewidth": 1,
-        "links": [],
-        "nullPointMode": "null",
-        "options": {
-          "alertThreshold": true
-        },
-        "percentage": false,
-        "pluginVersion": "7.4.3",
-        "pointradius": 2,
-        "points": false,
-        "renderer": "flot",
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
-        "targets": [
-          {
-            "expr": "(avg(rate(jmeter_request_size_in_bytes_sum{requestName=~\".+XX.+\"}[10s])/rate(jmeter_request_size_in_bytes_count{requestName=~\".+XX.+\"}[10s])) by(requestDirection)) * on(requestName) group_left sum(rate(jmeter_requests{requestName=~\".+XX.+\"}[10s]))",
-            "format": "time_series",
-            "instant": false,
             "interval": "",
-            "intervalFactor": 1,
-            "legendFormat": "{{requestDirection}}",
+            "legendFormat": "Threads",
+            "queryType": "randomWalk",
             "refId": "A"
           }
         ],
-        "thresholds": [],
-        "timeFrom": null,
-        "timeRegions": [],
-        "timeShift": null,
-        "title": "Sent/Received",
-        "tooltip": {
-          "shared": true,
-          "sort": 0,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "format": "decbytes",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": "0",
-            "show": true
-          },
-          {
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
+        "title": "Threads",
+        "type": "timeseries"
       },
       {
         "columns": [],
@@ -514,9 +350,9 @@
           "h": 7,
           "w": 24,
           "x": 0,
-          "y": 28
+          "y": 21
         },
-        "id": 22,
+        "id": 8,
         "links": [],
         "pageSize": null,
         "scroll": true,
@@ -699,6 +535,7 @@
             "format": "table",
             "hide": false,
             "instant": true,
+            "interval": "",
             "intervalFactor": 1,
             "legendFormat": "requests",
             "refId": "A"
@@ -759,91 +596,56 @@
         "type": "table-old"
       },
       {
-        "collapsed": false,
-        "datasource": null,
-        "gridPos": {
-          "h": 1,
-          "w": 24,
-          "x": 0,
-          "y": 35
-        },
-        "id": 10,
-        "panels": [],
-        "title": "Errors",
-        "type": "row"
-      },
-      {
-        "cacheTimeout": null,
-        "colorBackground": false,
-        "colorValue": false,
-        "colors": [
-          "#eab839",
-          "#bf1b00",
-          "#bf1b00"
-        ],
-        "datasource": "-- Mixed --",
-        "decimals": 2,
+        "datasource": "Prometheus",
         "fieldConfig": {
           "defaults": {
-            "custom": {}
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {},
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
           },
           "overrides": []
         },
-        "format": "percentunit",
-        "gauge": {
-          "maxValue": 1,
-          "minValue": 0,
-          "show": true,
-          "thresholdLabels": false,
-          "thresholdMarkers": true
-        },
         "gridPos": {
           "h": 7,
-          "w": 4,
+          "w": 5,
           "x": 0,
-          "y": 36
+          "y": 28
         },
-        "id": 12,
-        "interval": null,
+        "id": 10,
         "links": [],
-        "mappingType": 1,
-        "mappingTypes": [
-          {
-            "name": "value to text",
-            "value": 1
+        "options": {
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
           },
-          {
-            "name": "range to text",
-            "value": 2
-          }
-        ],
-        "maxDataPoints": 100,
-        "nullPointMode": "connected",
-        "nullText": null,
-        "postfix": "",
-        "postfixFontSize": "50%",
-        "prefix": "",
-        "prefixFontSize": "50%",
-        "rangeMaps": [
-          {
-            "from": "null",
-            "text": "N/A",
-            "to": "null"
-          }
-        ],
-        "sparkline": {
-          "fillColor": "rgba(31, 118, 189, 0.18)",
-          "full": false,
-          "lineColor": "rgb(31, 120, 193)",
-          "show": false
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true,
+          "text": {}
         },
-        "tableColumn": "mean_mean",
+        "pluginVersion": "7.4.3",
         "targets": [
           {
             "datasource": "Prometheus",
-            "expr": "sum(\nmax_over_time(jmeter_requests{requestName=~\".+XX.+\", requestStatus=\"FAIL\"}[10s])\n- min_over_time(jmeter_requests{requestName=~\".+XX.+\", requestStatus=\"FAIL\"}[10s])\n)\n/ sum(\nmax_over_time(jmeter_requests{requestName=~\".+XX.+\"}[10s])\n- min_over_time(jmeter_requests{requestName=~\".+XX.+\"}[10s])\n)",
-            "format": "time_series",
-            "hide": false,
+            "expr": "sum(\nmax_over_time(jmeter_requests{requestName=~\".+XX.+\", requestStatus=\"FAIL\"}[10s])\n- min_over_time(jmeter_requests{requestName=~\".+XX.+\", requestStatus=\"FAIL\"}[10s])\n) by (runId, requestName)",
+            "format": "table",
             "instant": true,
             "interval": "",
             "intervalFactor": 1,
@@ -851,19 +653,8 @@
             "refId": "A"
           }
         ],
-        "thresholds": "0.01",
-        "title": "Error Rate",
-        "transparent": true,
-        "type": "singlestat",
-        "valueFontSize": "80%",
-        "valueMaps": [
-          {
-            "op": "=",
-            "text": "N/A",
-            "value": "null"
-          }
-        ],
-        "valueName": "avg"
+        "title": "Errors per Transaction",
+        "type": "gauge"
       },
       {
         "columns": [],
@@ -877,11 +668,11 @@
         "fontSize": "100%",
         "gridPos": {
           "h": 7,
-          "w": 10,
-          "x": 4,
-          "y": 36
+          "w": 9,
+          "x": 5,
+          "y": 28
         },
-        "id": 14,
+        "id": 12,
         "links": [],
         "pageSize": null,
         "scroll": true,
@@ -995,9 +786,9 @@
           "h": 7,
           "w": 10,
           "x": 14,
-          "y": 36
+          "y": 28
         },
-        "id": 16,
+        "id": 14,
         "links": [],
         "pageSize": null,
         "scroll": true,
@@ -1113,107 +904,83 @@
         "type": "table-old"
       },
       {
-        "aliasColors": {},
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
         "datasource": "Prometheus",
-        "decimals": null,
         "fieldConfig": {
           "defaults": {
-            "custom": {}
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "graph": false,
+                "legend": false,
+                "tooltip": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": true
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "short"
           },
           "overrides": []
         },
-        "fill": 1,
-        "fillGradient": 0,
         "gridPos": {
           "h": 7,
           "w": 24,
           "x": 0,
-          "y": 43
+          "y": 35
         },
-        "hiddenSeries": false,
-        "id": 8,
-        "legend": {
-          "alignAsTable": false,
-          "avg": false,
-          "current": false,
-          "hideEmpty": true,
-          "hideZero": true,
-          "max": false,
-          "min": false,
-          "show": true,
-          "total": false,
-          "values": false
-        },
-        "lines": true,
-        "linewidth": 1,
-        "nullPointMode": "null",
+        "id": 16,
         "options": {
-          "alertThreshold": true
+          "graph": {},
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltipOptions": {
+            "mode": "single"
+          }
         },
-        "percentage": false,
         "pluginVersion": "7.4.3",
-        "pointradius": 10,
-        "points": false,
-        "renderer": "flot",
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
         "targets": [
           {
             "expr": "sum(rate(jmeter_requests{requestStatus=\"FAIL\"}[10s])) by (responseCode)",
-            "format": "time_series",
-            "intervalFactor": 1,
+            "interval": "",
             "legendFormat": "{{responseCode}}",
+            "queryType": "randomWalk",
             "refId": "A"
           }
         ],
-        "thresholds": [],
         "timeFrom": null,
-        "timeRegions": [],
         "timeShift": null,
-        "title": "Panel Title",
-        "tooltip": {
-          "shared": true,
-          "sort": 0,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "$$hashKey": "object:1417",
-            "decimals": 0,
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": "0",
-            "show": true
-          },
-          {
-            "$$hashKey": "object:1418",
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
+        "title": "Operation Fails",
+        "type": "timeseries"
       },
       {
         "collapsed": false,
@@ -1222,377 +989,262 @@
           "h": 1,
           "w": 24,
           "x": 0,
-          "y": 50
+          "y": 42
         },
         "id": 18,
         "panels": [],
-        "title": "Operation - $transaction",
+        "title": "Operation Details",
         "type": "row"
       },
       {
-        "aliasColors": {
-          "FAIL": "#bf1b00",
-          "PASS": "#629e51"
-        },
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
         "datasource": "Prometheus",
         "fieldConfig": {
           "defaults": {
-            "custom": {}
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "graph": false,
+                "legend": false,
+                "tooltip": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": true
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "short"
           },
           "overrides": []
         },
-        "fill": 1,
-        "fillGradient": 0,
         "gridPos": {
-          "h": 7,
+          "h": 8,
           "w": 12,
           "x": 0,
-          "y": 51
+          "y": 43
         },
-        "hiddenSeries": false,
-        "id": 19,
-        "interval": "$aggregation",
-        "legend": {
-          "avg": false,
-          "current": false,
-          "max": false,
-          "min": false,
-          "show": true,
-          "total": false,
-          "values": false
-        },
-        "lines": true,
-        "linewidth": 1,
-        "links": [],
-        "nullPointMode": "null",
+        "id": 20,
         "options": {
-          "alertThreshold": true
+          "graph": {},
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltipOptions": {
+            "mode": "single"
+          }
         },
-        "percentage": false,
         "pluginVersion": "7.4.3",
-        "pointradius": 5,
-        "points": false,
-        "renderer": "flot",
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
         "targets": [
           {
             "expr": "sum(rate(jmeter_requests{requestName=\"$transaction\"}[10s])) by (requestStatus)",
-            "format": "time_series",
             "interval": "",
-            "intervalFactor": 1,
             "legendFormat": "{{requestStatus}}",
+            "queryType": "randomWalk",
             "refId": "A"
           }
         ],
-        "thresholds": [],
         "timeFrom": null,
-        "timeRegions": [],
         "timeShift": null,
         "title": "TPS - $transaction",
-        "tooltip": {
-          "shared": true,
-          "sort": 2,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "$$hashKey": "object:463",
-            "decimals": 0,
-            "format": "ops",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": "0",
-            "show": true
-          },
-          {
-            "$$hashKey": "object:464",
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
+        "type": "timeseries"
       },
       {
-        "aliasColors": {
-          "90pct": "#1f78c1",
-          "avg": "#70dbed"
-        },
-        "bars": false,
-        "dashLength": 10,
-        "dashes": false,
         "datasource": "Prometheus",
         "fieldConfig": {
           "defaults": {
-            "custom": {}
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "graph": false,
+                "legend": false,
+                "tooltip": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": true
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "ms"
           },
-          "overrides": []
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "avg"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "dark-blue",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "90pt"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "super-light-blue",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            }
+          ]
         },
-        "fill": 1,
-        "fillGradient": 0,
         "gridPos": {
-          "h": 7,
+          "h": 8,
           "w": 12,
           "x": 12,
-          "y": 51
+          "y": 43
         },
-        "hiddenSeries": false,
-        "id": 20,
-        "interval": "$aggregation",
-        "legend": {
-          "avg": false,
-          "current": false,
-          "max": false,
-          "min": false,
-          "show": true,
-          "total": false,
-          "values": false
-        },
-        "lines": true,
-        "linewidth": 1,
-        "links": [],
-        "nullPointMode": "null",
+        "id": 22,
         "options": {
-          "alertThreshold": true
+          "graph": {},
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom"
+          },
+          "tooltipOptions": {
+            "mode": "single"
+          }
         },
-        "percentage": false,
         "pluginVersion": "7.4.3",
-        "pointradius": 5,
-        "points": false,
-        "renderer": "flot",
-        "seriesOverrides": [],
-        "spaceLength": 10,
-        "stack": false,
-        "steppedLine": false,
         "targets": [
           {
             "expr": "sum(rate(jmeter_response_time_sum{requestName=\"$transaction\"}[10s])/rate(jmeter_response_time_count{requestName=\"$transaction\"}[10s]))",
-            "format": "time_series",
-            "intervalFactor": 1,
+            "interval": "",
             "legendFormat": "avg",
+            "queryType": "randomWalk",
             "refId": "A"
           },
           {
             "expr": "sum(jmeter_response_time{requestName=\"$transaction\"})",
-            "format": "time_series",
-            "intervalFactor": 1,
-            "legendFormat": "90pct",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "90pt",
+            "queryType": "randomWalk",
             "refId": "B"
           }
         ],
-        "thresholds": [],
-        "timeFrom": null,
-        "timeRegions": [],
-        "timeShift": null,
         "title": "Response Time - $transaction",
-        "tooltip": {
-          "shared": true,
-          "sort": 0,
-          "value_type": "individual"
-        },
-        "type": "graph",
-        "xaxis": {
-          "buckets": null,
-          "mode": "time",
-          "name": null,
-          "show": true,
-          "values": []
-        },
-        "yaxes": [
-          {
-            "format": "ms",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": "0",
-            "show": true
-          },
-          {
-            "format": "short",
-            "label": null,
-            "logBase": 1,
-            "max": null,
-            "min": null,
-            "show": true
-          }
-        ],
-        "yaxis": {
-          "align": false,
-          "alignLevel": null
-        }
+        "type": "timeseries"
       },
       {
-        "columns": [],
         "datasource": "Prometheus",
         "fieldConfig": {
           "defaults": {
-            "custom": {}
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": null,
+              "filterable": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
           },
           "overrides": []
         },
-        "fontSize": "100%",
         "gridPos": {
           "h": 7,
           "w": 24,
           "x": 0,
-          "y": 58
+          "y": 51
         },
         "id": 24,
-        "links": [],
-        "pageSize": null,
-        "scroll": true,
-        "showHeader": true,
-        "sort": {
-          "col": 1,
-          "desc": false
+        "options": {
+          "showHeader": true
         },
-        "styles": [
-          {
-            "alias": "Time",
-            "align": "auto",
-            "dateFormat": "YYYY-MM-DD HH:mm:ss",
-            "pattern": "Time",
-            "type": "hidden"
-          },
-          {
-            "alias": "Request Name",
-            "align": "auto",
-            "colorMode": null,
-            "colors": [
-              "rgba(245, 54, 54, 0.9)",
-              "rgba(237, 129, 40, 0.89)",
-              "rgba(50, 172, 45, 0.97)"
-            ],
-            "dateFormat": "YYYY-MM-DD HH:mm:ss",
-            "decimals": 2,
-            "mappingType": 1,
-            "pattern": "requestName",
-            "thresholds": [],
-            "type": "number",
-            "unit": "short"
-          },
-          {
-            "alias": "Response Code",
-            "align": "auto",
-            "colorMode": null,
-            "colors": [
-              "rgba(245, 54, 54, 0.9)",
-              "rgba(237, 129, 40, 0.89)",
-              "rgba(50, 172, 45, 0.97)"
-            ],
-            "dateFormat": "YYYY-MM-DD HH:mm:ss",
-            "decimals": 2,
-            "mappingType": 1,
-            "pattern": "responseCode",
-            "thresholds": [],
-            "type": "number",
-            "unit": "short"
-          },
-          {
-            "alias": "Response Message",
-            "align": "auto",
-            "colorMode": null,
-            "colors": [
-              "rgba(245, 54, 54, 0.9)",
-              "rgba(237, 129, 40, 0.89)",
-              "rgba(50, 172, 45, 0.97)"
-            ],
-            "dateFormat": "YYYY-MM-DD HH:mm:ss",
-            "decimals": 2,
-            "mappingType": 1,
-            "pattern": "responseMessage",
-            "thresholds": [],
-            "type": "number",
-            "unit": "short"
-          },
-          {
-            "alias": "Run ID",
-            "align": "auto",
-            "colorMode": null,
-            "colors": [
-              "rgba(245, 54, 54, 0.9)",
-              "rgba(237, 129, 40, 0.89)",
-              "rgba(50, 172, 45, 0.97)"
-            ],
-            "dateFormat": "YYYY-MM-DD HH:mm:ss",
-            "decimals": 2,
-            "mappingType": 1,
-            "pattern": "runId",
-            "thresholds": [],
-            "type": "number",
-            "unit": "short"
-          },
-          {
-            "alias": "Count",
-            "align": "auto",
-            "colorMode": null,
-            "colors": [
-              "rgba(245, 54, 54, 0.9)",
-              "rgba(237, 129, 40, 0.89)",
-              "rgba(50, 172, 45, 0.97)"
-            ],
-            "dateFormat": "YYYY-MM-DD HH:mm:ss",
-            "decimals": 0,
-            "mappingType": 1,
-            "pattern": "Value",
-            "thresholds": [],
-            "type": "number",
-            "unit": "none"
-          },
-          {
-            "alias": "",
-            "align": "auto",
-            "colorMode": null,
-            "colors": [
-              "rgba(245, 54, 54, 0.9)",
-              "rgba(237, 129, 40, 0.89)",
-              "rgba(50, 172, 45, 0.97)"
-            ],
-            "decimals": 2,
-            "pattern": "/.*/",
-            "thresholds": [],
-            "type": "number",
-            "unit": "short"
-          }
-        ],
+        "pluginVersion": "7.4.3",
         "targets": [
           {
             "expr": "sum(\nmax_over_time(jmeter_requests{requestName=~\"^$transactionGroup\"}[10s])\n- min_over_time(jmeter_requests{requestName=~\"^$transactionGroup\"}[10s])\n) by (runId, requestName, responseCode, responseMessage)",
             "format": "table",
-            "instant": true,
             "interval": "",
-            "intervalFactor": 1,
             "legendFormat": "",
+            "queryType": "randomWalk",
             "refId": "A"
           }
         ],
-        "title": "Transaction Info",
-        "transform": "table",
-        "type": "table-old"
+        "title": "Transaction info",
+        "type": "table"
       }
     ],
-    "refresh": "5s",
+    "refresh": "10s",
     "schemaVersion": 27,
     "style": "dark",
     "tags": [],
@@ -1602,8 +1254,8 @@
           "allValue": null,
           "current": {
             "selected": false,
-            "text": "UC01_XX",
-            "value": "UC01_XX"
+            "text": "UC01_XX_GetAll",
+            "value": "UC01_XX_GetAll"
           },
           "datasource": "Prometheus",
           "definition": "label_values(jmeter_requests, requestName)",
@@ -1611,15 +1263,21 @@
           "error": null,
           "hide": 0,
           "includeAll": false,
-          "label": "Operation",
+          "label": null,
           "multi": false,
           "name": "transaction",
-          "options": [],
+          "options": [
+            {
+              "selected": true,
+              "text": "UC01_XX_GetAll",
+              "value": "UC01_XX_GetAll"
+            }
+          ],
           "query": {
             "query": "label_values(jmeter_requests, requestName)",
-            "refId": "Prometheus-transaction-Variable-Query"
+            "refId": "StandardVariableQuery"
           },
-          "refresh": 2,
+          "refresh": 0,
           "regex": "/XX/",
           "skipUrlSync": false,
           "sort": 0,
@@ -1632,7 +1290,7 @@
         {
           "allValue": null,
           "current": {
-            "selected": false,
+            "selected": true,
             "text": "UC01",
             "value": "UC01"
           },
@@ -1640,17 +1298,23 @@
           "definition": "jmeter_requests{requestName=\"$transaction\"}",
           "description": null,
           "error": null,
-          "hide": 2,
+          "hide": 0,
           "includeAll": false,
           "label": null,
           "multi": false,
           "name": "transactionGroup",
-          "options": [],
+          "options": [
+            {
+              "selected": true,
+              "text": "UC01",
+              "value": "UC01"
+            }
+          ],
           "query": {
             "query": "jmeter_requests{requestName=\"$transaction\"}",
-            "refId": "Prometheus-transactionGroup-Variable-Query"
+            "refId": "StandardVariableQuery"
           },
-          "refresh": 2,
+          "refresh": 0,
           "regex": "/(UC\\d{2})/",
           "skipUrlSync": false,
           "sort": 0,
@@ -1659,50 +1323,16 @@
           "tagsQuery": "",
           "type": "query",
           "useTags": false
-        },
-        {
-          "description": null,
-          "error": null,
-          "hide": 2,
-          "label": null,
-          "name": "gatlingWriteInterval",
-          "query": "5",
-          "skipUrlSync": false,
-          "type": "constant"
         }
       ]
     },
     "time": {
-      "from": "now-15m",
+      "from": "now-30m",
       "to": "now"
     },
-    "timepicker": {
-      "refresh_intervals": [
-        "5s",
-        "10s",
-        "30s",
-        "1m",
-        "5m",
-        "15m",
-        "30m",
-        "1h",
-        "2h",
-        "1d"
-      ],
-      "time_options": [
-        "5m",
-        "15m",
-        "1h",
-        "6h",
-        "12h",
-        "24h",
-        "2d",
-        "7d",
-        "30d"
-      ]
-    },
+    "timepicker": {},
     "timezone": "",
-    "title": "Test overview",
-    "uid": "uAbR86Qiq",
-    "version": 4
+    "title": "Test overview v1",
+    "uid": "qb3OEosGz",
+    "version": 3
   }
