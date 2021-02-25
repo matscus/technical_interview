@@ -5,7 +5,6 @@ test:
 engine:
 	go build -o ${BINARY} main.go
 
-
 unittest:
 	go test -v  ./...
 
@@ -20,6 +19,9 @@ run:
 
 stop:
 	docker-compose down
+
+kill:
+	docker-compose down --rmi all -v
 
 lint-prepare:
 	@echo "Installing golangci-lint" 
