@@ -112,7 +112,7 @@ func (u *User) Update() error {
 }
 
 func (u *User) Delete() error {
-	_, err := db.NamedExec("DELETE users WHERE id=$1", &u.ID)
+	_, err := db.Exec("DELETE from users WHERE id=$1", u.ID)
 	if err != nil {
 		return err
 	}
