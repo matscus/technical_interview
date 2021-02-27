@@ -2,8 +2,9 @@ package users
 
 import (
 	"database/sql"
-	"log"
 	"testing"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/google/uuid"

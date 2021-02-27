@@ -1,8 +1,9 @@
 package handlers
 
 import (
-	"log"
 	"net/http"
+
+	log "github.com/sirupsen/logrus"
 )
 
 //WriteHTTPError - default write error func

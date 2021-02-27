@@ -3,10 +3,11 @@ package handlers
 import (
 	"bytes"
 	"encoding/json"
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/google/uuid"

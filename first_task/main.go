@@ -4,13 +4,14 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"log"
 	"net"
 	"net/http"
 	"net/http/pprof"
 	"os"
 	"os/signal"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/gorilla/mux"
 	"github.com/matscus/technical_interview/first_task/handlers"
