@@ -48,10 +48,3 @@ make stop
     * Requests Get All Users, Update and Check - 300tps
     * Request Delete User - 10tps
     * SLA for all request - 1s
-    |  Transaction  |   Operations    |       TPS     |  SLA  |
-    |:------------- |:---------------:| -------------:|------:|
-    | Create User   | Create User     |     10tps     |    1s |
-    | Update User   | Get All Users   |     300tps    |    1s |
-                      Update                               1s
-                      Check                                1s
-    | Delete user   | Delete          |     10tps     |    1s |
